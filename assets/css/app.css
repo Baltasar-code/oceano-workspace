@@ -1,0 +1,7 @@
+.card { background: #fff; padding: 1.5rem; border-radius: 1rem; border: 1px solid #e2e8f0; }
+.btn-primary { background: #3b82f6; color: #fff; padding: 0.5rem 1rem; border-radius: 0.5rem; }
+.input-field { width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; }
+.table-oceano { width: 100%; text-align: left; }
+.sidebar { background: #0f172a; color: #fff; height: 100vh; }
+.nav-item { padding: 0.75rem 1rem; display: block; color: #94a3b8; }
+.nav-item.active { color: #3b82f6; background: rgba(59,130,246,0.1); }
