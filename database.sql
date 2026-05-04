@@ -1,0 +1,9 @@
+-- OCEANO WORKSPACE Script SQL
+CREATE TABLE IF NOT EXISTS areas (id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(100) NOT NULL UNIQUE) ENGINE=InnoDB;
+INSERT INTO areas (nombre) VALUES ('Dirección'), ('Gerencia'), ('Coordinación'), ('Comunicaciones'), ('Diseño'), ('Área Legal'), ('Administrativo');
+CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(150) NOT NULL, email VARCHAR(150) NOT NULL UNIQUE, password_hash VARCHAR(255) NOT NULL, rol ENUM('Admin', 'Standard') DEFAULT 'Standard', area_id INT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (area_id) REFERENCES areas(id) ON DELETE SET NULL) ENGINE=InnoDB;
+INSERT INTO users (nombre, email, password_hash, rol, area_id) VALUES ('Administrador Inicial', 'admin@oceano.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 1);
+CREATE TABLE IF NOT EXISTS monthly_links (id INT AUTO_INCREMENT PRIMARY KEY, user_id INT NOT NULL, mes_anio VARCHAR(7) NOT NULL, descripcion TEXT, nombre_archivo VARCHAR(255), drive_link TEXT NOT NULL, fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS events (id INT AUTO_INCREMENT PRIMARY KEY, titulo VARCHAR(200) NOT NULL, descripcion TEXT, fecha DATETIME NOT NULL, creado_por INT, fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (creado_por) REFERENCES users(id) ON DELETE SET NULL) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS messages (id INT AUTO_INCREMENT PRIMARY KEY, sender_id INT NOT NULL, receiver_id INT DEFAULT NULL, contenido TEXT NOT NULL, leido TINYINT(1) DEFAULT 0, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE, FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE) ENGINE=InnoDB;
+CREATE INDEX idx_messages_unread ON messages(receiver_id, leido);
